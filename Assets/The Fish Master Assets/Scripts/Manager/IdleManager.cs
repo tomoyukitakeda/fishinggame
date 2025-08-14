@@ -71,7 +71,7 @@ public class IdleManager : MonoBehaviour
         _appStartRealtime = Time.realtimeSinceStartup;
         RecalcCosts();
     }
-    public int CurrentLength =>  -1*(baseLength + lengthLevel * lengthStep);
+    public int CurrentLength =>  baseLength + lengthLevel * lengthStep;
     public int CurrentStrength => 3 + strengthLevel;       // もともと3スタートの想定を維持
     public int OfflinePerMinute => 3 + offlineLevel;       // もともと3スタートの想定を維持
 

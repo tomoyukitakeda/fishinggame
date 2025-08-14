@@ -15,7 +15,7 @@ MonoBehaviour:
   fishName: horse_mackerel
   japaneseName: "\u30DE\u30A2\u30B8"
   description: "\u6C96\u5408\u304B\u3089\u6CBF\u5CB8\u307E\u3067\u5E45\u5E83\u304F\u751F\u606F\u3059\u308B\u56DE\u904A\u9B5A\u3002\u7FA4\u308C\u3067\u6CF3\u304E\u3001\u98DF\u7528\u3068\u3057\u3066\u975E\u5E38\u306B\u4EBA\u6C17\u304C\u9AD8\u3044\u3002"
-  price: 180
+  price: 2
   minLenght: 5
   maxLenght: 40
   collirRadisu: 0.4

@@ -15,7 +15,7 @@ MonoBehaviour:
   fishName: sea_cucumber
   japaneseName: "\u30CA\u30DE\u30B3"
   description: "\u6D77\u5E95\u306B\u751F\u606F\u3059\u308B\u68D8\u76AE\u52D5\u7269\u306E\u4E00\u7A2E\u3002\u7802\u3084\u6CE5\u3092\u98DF\u3079\u3066\u6804\u990A\u5206\u3092\u53D6\u308A\u8FBC\u307F\u3001\u6D77\u306E\u6D44\u5316\u306B\u3082\u5F79\u7ACB\u3064\u3002"
-  price: 80
+  price: 1
   minLenght: 2
   maxLenght: 50
   collirRadisu: 0.3

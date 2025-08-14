@@ -83,8 +83,7 @@ public class Fish : MonoBehaviour
 
         // ★ 初期向き：移動方向に合わせてflipXをセット
         bool movingRight = target.x > position.x;
-        // 画像が「右向きで描かれている」想定：右移動ならflipX=false、左移動ならtrue
-        rend.flipX = !movingRight;
+      
 
 
         float dur = 3f;
@@ -105,6 +104,8 @@ public class Fish : MonoBehaviour
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InOutSine)
             .SetLink(gameObject, LinkBehaviour.KillOnDestroy);
+
+
 
     }
     // 以前のスケール反転は廃止

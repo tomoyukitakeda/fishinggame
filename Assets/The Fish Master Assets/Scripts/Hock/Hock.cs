@@ -18,6 +18,8 @@ public class Hock : MonoBehaviour
     private Camera mainCamera;
     private Collider2D coll;
 
+    [Header("References")]
+    [SerializeField] private LengthUIController lengthUI; // Inspector で割り当て
 
     private int length;
     private int strength;
@@ -26,7 +28,7 @@ public class Hock : MonoBehaviour
     private bool canMove =false;
     private bool canFishing =true;
 
-    private List<Fish> hookedFishes;
+    public List<Fish> hookedFishes;
 
     private Tweener cameraTween;
 
@@ -88,6 +90,7 @@ public class Hock : MonoBehaviour
 
         _inProgress = true;          // ← 最上段で立てる
         canFishing = false;
+        ResetFish();
 
         // 表示が消えない保険
         gameObject.SetActive(true);
@@ -99,10 +102,23 @@ public class Hock : MonoBehaviour
         snagged = false;
         canFishing = false;
         GetFishCoin = 0;
-        length = IdleManager.instance.CurrentLength - 20;
+
+
+
+        // UI で選んだ値を負にして設定（負の方向へ進む）
+        int maxReach = Mathf.Max(1, IdleManager.instance.CurrentLength);
+        int uiDepth = Mathf.Clamp(lengthUI.SelectedDepth, 1, maxReach);
+
+        Debug.Log(lengthUI.SelectedDepth+"セレクトディープ");
+
+        length = -uiDepth;
+
+
         strength = IdleManager.instance.CurrentStrength;
         fishCount = 0;
         float time = (-length) * 0.1f;
+
+        lengthUI.SetInteractable(false);
 
         cameraTween = mainCamera.transform.DOMoveY(length, 1 + time * 0.25f, false).OnUpdate(delegate
               {
@@ -173,12 +189,7 @@ public class Hock : MonoBehaviour
             }
             else
             {
-                // 釣れていた魚もリセットして消す
-                for (int i = 0; i < hookedFishes.Count; i++)
-                {
-                    hookedFishes[i].transform.SetParent(null);
-                    hookedFishes[i].ResetFish();
-                }
+                ResetFish();
             }
 
             GetFishCoin = forceMiss ? 0 : num;
@@ -200,6 +211,7 @@ public class Hock : MonoBehaviour
 
             ScreenManager.Instance.ChangeScreen(Screens.END);
             hookedFishes.Clear();
+            lengthUI.SetInteractable(true);
 
             // 次回入力のデバウンス（画面遷移直後の誤タップ対策）
             _blockInputUntil = Time.unscaledTime + 0.15f;
@@ -210,6 +222,17 @@ public class Hock : MonoBehaviour
             GetFishCoin = 0;
         });
     }
+
+    private void ResetFish()
+    {
+        // 釣れていた魚もリセットして消す
+        for (int i = 0; i < hookedFishes.Count; i++)
+        {
+            hookedFishes[i].transform.SetParent(null);
+            hookedFishes[i].ResetFish();
+        }
+    }
+
     // ★危険物に当たったときの処理（この回は終了に）
     private void TriggerSnag(Fish hazard)
     {
