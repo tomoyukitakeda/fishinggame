@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2009e99c99e9d294890949bf6e62217f, type: 3}
+  m_Name: hammerhead_shark
+  m_EditorClassIdentifier: 
+  fishName: hammerhead_shark
+  japaneseName: "\u30B7\u30E5\u30E2\u30AF\u30B6\u30E1"
+  description: "\u982D\u90E8\u304CT\u5B57\u578B\u306B\u5E83\u304C\u3063\u305F\u72EC\u7279\u306E\u5F62\u72B6\u3092\u6301\u3064\u30B5\u30E1\u3002\u5E83\u3044\u8996\u91CE\u3068\u9AD8\u3044\u611F\u77E5\u80FD\u529B\u3067\u7372\u7269\u3092\u8FFD\u3044\u8A70\u3081\u308B\u3002\u6CBF\u5CB8\u3084\u5916\u6D0B\u306E\u4E2D\u5C64\u301C\u8868\u5C64\u306B\u751F\u606F\u3057\u3001\u4FCA\u654F\u306A\u6CF3\u304E\u3067\u77E5\u3089\u308C\u308B\u3002"
+  price: 3000
+  minLenght: 10
+  maxLenght: 120
+  collirRadisu: 1.2
+  sprite: {fileID: 21300000, guid: 7e50daae5dff11d408910440cbc33f02, type: 3}
+  kind: 1
+  spawnCount: 10

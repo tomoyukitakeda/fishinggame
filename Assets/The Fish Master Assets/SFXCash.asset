@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2acd0f76dfc56d84b9ceef97dc4407ae, type: 3}
+  m_Name: SFXCash
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: d1b674f99bbe06c409a657560d325df7, type: 3}
+  - {fileID: 8300000, guid: 799e48cadc8804149976168fa9ce391a, type: 3}
+  - {fileID: 8300000, guid: eda6ea67b0c58874080799f4ea5151d4, type: 3}
+  - {fileID: 8300000, guid: dc0414af886970e4a9c781897b454b2a, type: 3}
+  bus: 2
+  volumeMin: 0.9
+  volumeMax: 1
+  pitchMin: 0.98
+  pitchMax: 1.02
+  loop: 0
+  spatialBlend: 0
+  dopplerLevel: 0
+  spread: 0
+  minDistance: 1
+  maxDistance: 25

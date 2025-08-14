@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2009e99c99e9d294890949bf6e62217f, type: 3}
+  m_Name: sardine
+  m_EditorClassIdentifier: 
+  fishName: sardine
+  japaneseName: "\u30A4\u30EF\u30B7"
+  description: "\u5C0F\u578B\u306E\u56DE\u904A\u9B5A\u3067\u3001\u5927\u304D\u306A\u7FA4\u308C\u3092\u4F5C\u3063\u3066\u6CBF\u5CB8\u3084\u6C96\u5408\u3092\u6CF3\u3050\u3002\u98DF\u7528\u3068\u3057\u3066\u91CD\u8981\u3067\u3001\u6355\u98DF\u8005\u306E\u990C\u306B\u3082\u306A\u308B\u751F\u614B\u7CFB\u306E\u8981\u3002"
+  price: 120
+  minLenght: 1
+  maxLenght: 36
+  collirRadisu: 0.25
+  sprite: {fileID: 21300000, guid: a39f43cf14bd1d54989a1ef2d0d7ba8f, type: 3}
+  kind: 0
+  spawnCount: 10

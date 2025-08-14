@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2acd0f76dfc56d84b9ceef97dc4407ae, type: 3}
+  m_Name: SFXHock
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: e969e9598995e544ab754dd829d17a97, type: 3}
+  - {fileID: 8300000, guid: 4f9c6330b6d151a42928b6885d20db39, type: 3}
+  - {fileID: 8300000, guid: da15db981eea5ee4c8f28406861e5538, type: 3}
+  - {fileID: 8300000, guid: 04884c0876a80c24fb778e110f93cc7c, type: 3}
+  bus: 2
+  volumeMin: 0.9
+  volumeMax: 1
+  pitchMin: 0.98
+  pitchMax: 1.02
+  loop: 0
+  spatialBlend: 0
+  dopplerLevel: 0
+  spread: 0
+  minDistance: 1
+  maxDistance: 25

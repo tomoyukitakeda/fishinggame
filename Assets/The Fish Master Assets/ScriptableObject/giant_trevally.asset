@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2009e99c99e9d294890949bf6e62217f, type: 3}
+  m_Name: giant_trevally
+  m_EditorClassIdentifier: 
+  fishName: giant_trevally
+  japaneseName: "\u30ED\u30A6\u30CB\u30F3\u30A2\u30B8"
+  description: "\u71B1\u5E2F\u30FB\u4E9C\u71B1\u5E2F\u306E\u6CBF\u5CB8\u3084\u5916\u6D0B\u306B\u751F\u606F\u3059\u308B\u5927\u578B\u306E\u56DE\u904A\u9B5A\u3002\u975E\u5E38\u306B\u529B\u5F37\u304F\u3001\u91E3\u308A\u4EBA\u306B\u4EBA\u6C17\u306E\u30BF\u30FC\u30B2\u30C3\u30C8\u3002\u7370\u731B\u306A\u6355\u98DF\u8005\u3067\u3001\u5C0F\u9B5A\u3084\u7532\u6BBB\u985E\u3092\u8FFD\u3044\u56DE\u3059\u3002"
+  price: 2200
+  minLenght: 5
+  maxLenght: 80
+  collirRadisu: 0.9
+  sprite: {fileID: 21300000, guid: 89f2292ead2301d42b60dfac2ac7b20e, type: 3}
+  kind: 0
+  spawnCount: 2

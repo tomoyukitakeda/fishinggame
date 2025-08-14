@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2acd0f76dfc56d84b9ceef97dc4407ae, type: 3}
+  m_Name: SFXCast
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 3d84734ba2bf59f40a63130119000f43, type: 3}
+  - {fileID: 8300000, guid: 36b3f5b8cb031604cb35e63afcfbc846, type: 3}
+  - {fileID: 8300000, guid: 8fc7a510de1108e49ba44155c4b4b29f, type: 3}
+  - {fileID: 8300000, guid: 040d508c41957ae4f8dc9e1299fbbafc, type: 3}
+  bus: 2
+  volumeMin: 0.9
+  volumeMax: 1
+  pitchMin: 0.98
+  pitchMax: 1.02
+  loop: 0
+  spatialBlend: 0
+  dopplerLevel: 0
+  spread: 0
+  minDistance: 1
+  maxDistance: 25
