@@ -22,3 +22,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 923b12f8bb285a44e990dd911dfbba48, type: 3}
   kind: 0
   spawnCount: 5
+  persistentId: 3e37d6eea3364a7cb075b3ddf4262547

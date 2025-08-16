@@ -265,6 +265,7 @@ public class IdleManager : MonoBehaviour
     // ---- Collect ----
     public void CollectMoney()
     {
+
         wallet += totalGain;
         totalGain = 0;
         SaveProgress();

@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,6 +32,11 @@ public class FishTypeSO : ScriptableObject
     // 既に作った FishTypeSO にこれを足す
     [Header("出現数")]
     public int spawnCount = 10;   // この種類を何匹スポーンするか
+
+    // ★ 図鑑用の永続ID（ランタイム保存のキーに使う。アセット名変更の影響を受けない）
+    [SerializeField, HideInInspector] private string persistentId;
+    public string PersistentId => persistentId;
+
 #if UNITY_EDITOR
     private void OnValidate()
     {
@@ -38,6 +44,12 @@ public class FishTypeSO : ScriptableObject
         if (sprite != null && fishName != sprite.name)
         {
             fishName = sprite.name;
+            EditorUtility.SetDirty(this);
+        }
+        // 永続ID未設定なら自動採番（1度だけ）
+        if (string.IsNullOrEmpty(persistentId))
+        {
+            persistentId = Guid.NewGuid().ToString("N");
             EditorUtility.SetDirty(this);
         }
     }
