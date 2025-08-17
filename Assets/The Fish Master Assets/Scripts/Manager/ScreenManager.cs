@@ -9,6 +9,11 @@ public class ScreenManager : MonoBehaviour
 {
     public static ScreenManager Instance;
 
+    // ... 既存フィールド ...
+    [Header("釣り開始ボタン（Hockと同じものを割り当て）")]
+    [SerializeField] private Button startFishingButton; // ★追加
+
+
     private GameObject curretScreen;
     public GameObject endScreen;
     public GameObject gameScreen;
@@ -51,35 +56,76 @@ public class ScreenManager : MonoBehaviour
         UpDateTexts();
 
     }
+    // ★ いつでもMAINのUIを更新できるユーティリティ
+    public void RefreshMainUI()
+    {
+        UpDateTexts();
+        ChecKIdles();
+    }
     public void ChangeScreen(Screens screen)
     {
-        curretScreen.SetActive(false);
+        var target = ScreenToGO(screen);
+        bool same = (curretScreen == target);
+
+        // 画面のアクティブ切替は同一画面ならスキップ
+        if (!same)
+        {
+            curretScreen?.SetActive(false);
+            curretScreen = target;
+            curretScreen?.SetActive(true);
+            Debug.Log($"[ScreenManager] ChangeScreen -> {screen}");
+        }
+
+     
         switch (screen)
         {
 
             case Screens.MAIN:
-                curretScreen = mainScreen;
+            
                 UpDateTexts();
                 ChecKIdles();
-                GetCoin = 0;
+                SetFishingButtonInteractable(true);   // ★MAINは有効
+                                                      // MAINに戻ったタイミングのみコインを0にしたいなら「同一画面でない時だけ」ゼロ化
+                if (!same) GetCoin = 0;
+
                 break;
 
             case Screens.GAME:
-                curretScreen = gameScreen;
-            
               
+
+                SetFishingButtonInteractable(true);   // ★GAMEは有効
                 break;
 
             case Screens.END:
-                curretScreen = endScreen;
+             
                 SetEndScreenMoney();
+                SetFishingButtonInteractable(false);  // ★ENDは無効！
                 break;
             case Screens.RETURN:
-                curretScreen = returnScreen;
+               
                 SetReturnScreenMoney();
+                SetFishingButtonInteractable(false);  // ★RETURNも無効
                 break;
         }
-        curretScreen?.SetActive(true);
+      
+    }
+
+    private GameObject ScreenToGO(Screens screen)
+    {
+        switch (screen)
+        {
+            case Screens.MAIN: return mainScreen;
+            case Screens.GAME: return gameScreen;
+            case Screens.END: return endScreen;
+            case Screens.RETURN: return returnScreen;
+        }
+        return null;
+    }
+
+
+    private void SetFishingButtonInteractable(bool value)  // ★追加
+    {
+        if (startFishingButton) startFishingButton.interactable = value;
     }
     public void SetEndScreenMoney()
     {
@@ -98,7 +144,8 @@ public class ScreenManager : MonoBehaviour
         strengthCostText.text = "$" + IdleManager.instance.strengthCost;
         strengthValueText.text =IdleManager.instance.CurrentStrength + " fishes.";
         offlineCostText.text ="$"+IdleManager.instance.offlineEarningsCost;
-        offlineValueText.text = "$" + IdleManager.instance.OfflinePerMinute + "/min";
+        offlineValueText.text =
+      "$" + IdleManager.instance.OfflinePerMinuteFloatForUI.ToString("0.##") + "/min";
 
     }
 

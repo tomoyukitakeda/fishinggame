@@ -439,8 +439,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 565.8, y: -155.648}
-  m_SizeDelta: {x: 1091.6, y: 282.814}
+  m_AnchoredPosition: {x: 492.66, y: -148.53}
+  m_SizeDelta: {x: 985.33, y: 297.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &196665855
 MonoBehaviour:
@@ -606,7 +606,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2bd777374f63ae8438094f9e9b05dd54, type: 2}
   - {fileID: 11400000, guid: e3875c009b2b1d442ad94ad01f83d3c5, type: 2}
   - {fileID: 11400000, guid: dddc05fd1d0e594429ea3ab78f74be45, type: 2}
-  - {fileID: 11400000, guid: a927bc6eb7b1cbf42957d41ef4eab47a, type: 2}
   - {fileID: 11400000, guid: 7af7b2dd802133c4181d53c993ff7645, type: 2}
   - {fileID: 11400000, guid: 1153b403deb450d49ab2ec0693bff0dc, type: 2}
   - {fileID: 11400000, guid: 191dc17b8fa4aff4fa6743e82865e339, type: 2}
@@ -988,11 +987,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2bd777374f63ae8438094f9e9b05dd54, type: 2}
   - {fileID: 11400000, guid: e3875c009b2b1d442ad94ad01f83d3c5, type: 2}
   - {fileID: 11400000, guid: dddc05fd1d0e594429ea3ab78f74be45, type: 2}
-  - {fileID: 11400000, guid: a927bc6eb7b1cbf42957d41ef4eab47a, type: 2}
   - {fileID: 11400000, guid: 7af7b2dd802133c4181d53c993ff7645, type: 2}
   - {fileID: 11400000, guid: 1153b403deb450d49ab2ec0693bff0dc, type: 2}
   - {fileID: 11400000, guid: 191dc17b8fa4aff4fa6743e82865e339, type: 2}
-  - {fileID: 11400000, guid: 1173d46c54c63064c841f0305bf47292, type: 2}
   - {fileID: 11400000, guid: e96944470acca2847935cb483165a52c, type: 2}
   - {fileID: 11400000, guid: b4d86019933abee4290502c36adb8903, type: 2}
   - {fileID: 11400000, guid: 4148cd2e1bf9b8545bfa00953855fe5e, type: 2}
@@ -1021,8 +1018,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09d08e7ab15845743b33d44df0f0c980, type: 2}
   - {fileID: 11400000, guid: b6e58c09829cbc442ac74fa865e8fb05, type: 2}
   - {fileID: 11400000, guid: f7a6620189e368549ac9c50b5a134515, type: 2}
-  - {fileID: 11400000, guid: 29efb6a01c06cce41bfac2d3268db043, type: 2}
-  - {fileID: 11400000, guid: 3712571a1d5f5e148a5976b7a495543b, type: 2}
   - {fileID: 11400000, guid: 4bcc2796762f53a4cbbc9c8b23e14699, type: 2}
   - {fileID: 11400000, guid: 30e3e5246df01f54182cf1e393bf153e, type: 2}
   - {fileID: 11400000, guid: ecfedfa9c20d79340b9a25a9dc470184, type: 2}
@@ -1032,6 +1027,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3756c965fe0142045930072c1636400c, type: 2}
   - {fileID: 11400000, guid: d0477b38f5f66734884e7b0b817fd97f, type: 2}
   - {fileID: 11400000, guid: 7ef617b461332bf4ea3492bc2334b366, type: 2}
+  surfaceY: -10
+  spawnFromBothSides: 1
 --- !u!114 &364672717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,6 +1055,9 @@ MonoBehaviour:
   lengthCost: 0
   strengthCost: 0
   offlineEarningsCost: 0
+  offlineBasePerMin: 3
+  offlineK: 0.35
+  maxOfflineTotal: 5000
   costs: 7800000097000000c5000000fa000000440100009e01000019020000af0200007c03000079040000cc05000077070000af0900007c0c000034100000ef1400002a1b000028230000a72d0000a861000050c30000a0860100400d0300
 --- !u!114 &364672718
 MonoBehaviour:
@@ -1071,6 +1071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ec7a6144c8aa746a6704ceff558347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startFishingButton: {fileID: 1061753887}
   endScreen: {fileID: 93466595}
   gameScreen: {fileID: 93282477}
   mainScreen: {fileID: 552804186}
@@ -1187,8 +1188,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -2.274, y: -105.207}
-  m_SizeDelta: {x: 1098.025, y: 352.976}
+  m_AnchoredPosition: {x: 11.255, y: -105.207}
+  m_SizeDelta: {x: 1034.888, y: 352.976}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &493403450
 MonoBehaviour:
@@ -1801,10 +1802,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 353742661}
-  - {fileID: 1061753886}
   - {fileID: 625149337}
   - {fileID: 885278951}
   - {fileID: 859359879}
+  - {fileID: 1061753886}
   - {fileID: 8914801555596614818}
   m_Father: {fileID: 541526435}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2316,8 +2317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 555.8, y: -168.52557}
-  m_SizeDelta: {x: 1111.6, y: 297.051}
+  m_AnchoredPosition: {x: 510.70178, y: -168.52557}
+  m_SizeDelta: {x: 985.326, y: 297.051}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &703566284
 MonoBehaviour:
@@ -2530,10 +2531,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 44.75
   m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -2881,13 +2882,15 @@ MonoBehaviour:
   startDebounceSeconds: 0.25
   normalReturnTime: 1.2
   hazardReturnTime: 0.5
-  hookStopY: -5
+  hookStopY: -10
   surfaceThresholdY: -11
   hookedTransfrom: {fileID: 837635452}
+  fishPedia: {fileID: 257882796}
   lengthUI: {fileID: 885278952}
   caughtUI: {fileID: 295583257}
-  hookedFishes: []
   caughtInventory: {fileID: 927855826}
+  startFishingButton: {fileID: 1061753887}
+  hookedFishes: []
   sfxCast: {fileID: 11400000, guid: 784b77a3e41a045488fd5e6998ec366b, type: 2}
   sfxHook: {fileID: 11400000, guid: 9a7fc7cbd622a884d85c78fee05fc5c8, type: 2}
   sfxReel: {fileID: 11400000, guid: 1c89637abb7a7d2479e55a3c29e985a3, type: 2}
@@ -3345,7 +3348,7 @@ GameObject:
   - component: {fileID: 1061753888}
   - component: {fileID: 1061753887}
   m_Layer: 5
-  m_Name: StartFishing
+  m_Name: StartFishingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3367,8 +3370,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -381.08276}
+  m_SizeDelta: {x: 0, y: -762.166}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1061753887
 MonoBehaviour:
@@ -3413,19 +3416,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1061753888}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 878229047}
-        m_TargetAssemblyTypeName: Hock, Assembly-CSharp
-        m_MethodName: StartFishing
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1061753888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3623,7 +3614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3734,10 +3725,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 44.75
   m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -4189,10 +4180,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 44.75
   m_fontSizeBase: 60
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -4463,10 +4454,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 44.75
   m_fontSizeBase: 60
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -4711,10 +4702,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
+  m_fontSize: 44.75
   m_fontSizeBase: 60
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -4862,7 +4853,7 @@ GameObject:
   - component: {fileID: 1546305783}
   - component: {fileID: 1546305782}
   m_Layer: 5
-  m_Name: Value Text
+  m_Name: LevelValue Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4936,10 +4927,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 44.75
   m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -5110,7 +5101,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.20153809, y: -98}
+  m_AnchoredPosition: {x: -26, y: -98}
   m_SizeDelta: {x: 0, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1560932229
@@ -5563,7 +5554,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -96.24097, y: -106.17}
+  m_AnchoredPosition: {x: -96.24097, y: -146}
   m_SizeDelta: {x: 192.48, y: 212.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1915113720

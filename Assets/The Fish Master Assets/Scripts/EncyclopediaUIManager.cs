@@ -3,7 +3,11 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EncyclopediaUIManager : MonoBehaviour { 
+public class EncyclopediaUIManager : MonoBehaviour {
+
+
+    public static EncyclopediaUIManager Instance { get; private set; }
+
     [Header("Elements")]
     [SerializeField] private RectTransform encyclopediaPanel;
 
@@ -14,7 +18,14 @@ private Vector2 closePostion;
 private bool isOpen = false; // 開いているかどうかのフラグ
 
 [SerializeField] Button encyclopediaButton;
-private void Start()
+
+    public bool IsOpen => isOpen; // 外部から参照用
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+    private void Start()
 {
 
     openedPostion = Vector2.zero;

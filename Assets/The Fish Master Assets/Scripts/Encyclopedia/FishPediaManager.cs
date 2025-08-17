@@ -54,7 +54,7 @@ public class FishPediaManager : MonoBehaviour
 
    
 
-    public void ReportCaught(FishTypeSO type, float size)
+    public void ReportCaught(FishTypeSO type)
     {
         if (type == null) return;
         var e = Ensure(type);
@@ -116,4 +116,6 @@ public class FishPediaManager : MonoBehaviour
             foreach (var e in data.entries)
                 _map[e.id] = e;
     }
+
+  
 }

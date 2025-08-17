@@ -1,7 +1,8 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,14 +23,14 @@ public class IdleManager : MonoBehaviour
     private bool _hasShownReturn = false;
 
     [Header("Length Settings")]
-    [SerializeField] private int baseLength = 10;   // •\¦—p‚Ì‰Šú’·
-    [SerializeField] private int lengthStep = 5;   // 1ƒŒƒxƒ‹‚Å‘Œ¸‚·‚é’·‚³
+    [SerializeField] private int baseLength = 10;   // è¡¨ç¤ºç”¨ã®åˆæœŸé•·
+    [SerializeField] private int lengthStep = 5;   // 1ãƒ¬ãƒ™ãƒ«ã§å¢—æ¸›ã™ã‚‹é•·ã•
 
 
 
     [Header("Offline Settings")]
-    [Tooltip("ƒIƒtƒ‰ƒCƒ“û‰v‚Ì’PˆÊ‚Íu•ª‚ ‚½‚èv")]
-    [SerializeField] private int maxOfflineMinutes = 24 * 60; // ãŒÀ: 24h
+    [Tooltip("ã‚ªãƒ•ãƒ©ã‚¤ãƒ³åç›Šã®å˜ä½ã¯ã€Œåˆ†ã‚ãŸã‚Šã€")]
+    [SerializeField] private int maxOfflineMinutes = 24 * 60; // ä¸Šé™: 24h
 
 
     [Header("UI Buttons")]
@@ -37,27 +38,56 @@ public class IdleManager : MonoBehaviour
     [SerializeField] private Button BuyStrengthButton;
     [SerializeField] private Button BuyOfflineEarningsButton;
 
-    // ŒöŠJiUIƒoƒCƒ“ƒh—pj
+    // å…¬é–‹ï¼ˆUIãƒã‚¤ãƒ³ãƒ‰ç”¨ï¼‰
     [HideInInspector] public int lengthLevel;
     [HideInInspector] public int strengthLevel;
     [HideInInspector] public int offlineLevel;
-    [HideInInspector] public int wallet;
+    public int wallet;
      public int totalGain;
 
     [HideInInspector] public int lengthCost;
     [HideInInspector] public int strengthCost;
     [HideInInspector] public int offlineEarningsCost;
 
-    // ƒRƒXƒgƒe[ƒuƒ‹iƒŒƒxƒ‹0¨index0 ‚Æ‘Î‰j
+
+    // è¿½åŠ ï¼šã‚ªãƒ•ãƒ©ã‚¤ãƒ³åç›Šã®é€“æ¸›è¨­å®š
+    [SerializeField] private float offlineBasePerMin = 3f;   // åˆæœŸã®åŸºç¤å€¤
+    [SerializeField] private float offlineK = 0.35f;         // é€“æ¸›ã®å¼·ã•ï¼ˆ0.25ã€œ0.5æ¨å¥¨ï¼‰
+    [SerializeField] private int maxOfflineTotal = 5000;     // ï¼ˆä»»æ„ï¼‰å®‰å…¨ä¸Šé™ã‚‚ä½µç”¨æ¨å¥¨
+    // ã‚³ã‚¹ãƒˆãƒ†ãƒ¼ãƒ–ãƒ«ï¼ˆãƒ¬ãƒ™ãƒ«0â†’index0 ã¨å¯¾å¿œï¼‰
     [SerializeField]
     private int[] costs = new int[]
     {
         120,151,197,250,324,414,537,687,892,1145,
         1484,1911,2479,3196,4148,5359,6954,9000,11687,25000,
-        50000,100000,200000
+        50000,100000,200000,400000,800000
     };
 
+    // ---- ä¸Šé™ã®åˆ¤å®šç”¨ ----
+    private int MaxLevel => costs.Length - 1;
+
     public static IdleManager instance;
+
+    public int OfflinePerMinute
+    {
+        get
+        {
+            // é€“æ¸›ï¼š 3 + 0.35 * sqrt(Lv)
+            // LvãŒä¸ŠãŒã‚‹ã»ã©ä¼¸ã³ãŒã‚†ã‚‹ã‚„ã‹ã«ãªã‚‹
+            float per = offlineBasePerMin + offlineK * Mathf.Sqrt(offlineLevel);
+            return Mathf.Max(1, Mathf.FloorToInt(per));
+        }
+    }
+    public float OfflinePerMinuteFloatForUI
+    {
+        get
+        {
+            // é€“æ¸›å¼ã¨åŒã˜ãƒ­ã‚¸ãƒƒã‚¯ã§ã€å°æ•°ã®ã¾ã¾è¿”ã™
+            float basePer = offlineBasePerMin;   // ä¾‹: 3
+            float per = basePer + offlineK * Mathf.Sqrt(offlineLevel); // ä¾‹: 0.35 * sqrt(Lv)
+            return Mathf.Max(1f, per);
+        }
+    }
 
     private void Awake()
     {
@@ -65,25 +95,25 @@ public class IdleManager : MonoBehaviour
         instance = this;
         // Load
         lengthLevel = PlayerPrefs.GetInt(KEY_LENGTH_LEVEL, 0);
-        strengthLevel = PlayerPrefs.GetInt(KEY_STRENGTH_LEVEL, 0); // ‰Šú3‚ğƒx[ƒX‚É‚µ‚½‚¢ê‡‚Í +3 ‚ğÀ’l‘¤‚Å‘«‚·
+        strengthLevel = PlayerPrefs.GetInt(KEY_STRENGTH_LEVEL, 0); // åˆæœŸ3ã‚’ãƒ™ãƒ¼ã‚¹ã«ã—ãŸã„å ´åˆã¯ +3 ã‚’å®Ÿå€¤å´ã§è¶³ã™
         offlineLevel = PlayerPrefs.GetInt(KEY_OFFLINE_LEVEL, 0);
         wallet = PlayerPrefs.GetInt(KEY_WALLET, 0);
         _appStartRealtime = Time.realtimeSinceStartup;
         RecalcCosts();
     }
     public int CurrentLength =>  baseLength + lengthLevel * lengthStep;
-    public int CurrentStrength => 3 + strengthLevel;       // ‚à‚Æ‚à‚Æ3ƒXƒ^[ƒg‚Ì‘z’è‚ğˆÛ
-    public int OfflinePerMinute => 3 + offlineLevel;       // ‚à‚Æ‚à‚Æ3ƒXƒ^[ƒg‚Ì‘z’è‚ğˆÛ
+    public int CurrentStrength => 3 + strengthLevel;       // ã‚‚ã¨ã‚‚ã¨3ã‚¹ã‚¿ãƒ¼ãƒˆã®æƒ³å®šã‚’ç¶­æŒ
+  
 
 
     private void Start()
     {
-        // š ‹N“®’¼ŒãiƒR[ƒ‹ƒhƒXƒ^[ƒgj‚Å‚àŒvZ‚·‚é
-        // ‹N“®’¼Œã‚Ì1ƒtƒŒ[ƒ€Œã‚É1‰ñ‚¾‚¯ŒvZ
+        // â˜… èµ·å‹•ç›´å¾Œï¼ˆã‚³ãƒ¼ãƒ«ãƒ‰ã‚¹ã‚¿ãƒ¼ãƒˆï¼‰ã§ã‚‚è¨ˆç®—ã™ã‚‹
+        // èµ·å‹•ç›´å¾Œã®1ãƒ•ãƒ¬ãƒ¼ãƒ å¾Œã«1å›ã ã‘è¨ˆç®—
         //   StartCoroutine(DoInitialOfflineNextFrame());
         ComputeOfflineAndShow();
 
-        // ƒ{ƒ^ƒ“ƒCƒxƒ“ƒg“o˜^
+        // ãƒœã‚¿ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²
         if (BuyLengthsButton != null)
             BuyLengthsButton.onClick.AddListener(BuyLengthFunc);
         if (BuyStrengthButton != null)
@@ -94,7 +124,7 @@ public class IdleManager : MonoBehaviour
    
     private void OnDestroy()
     {
-        // ƒ{ƒ^ƒ“ƒCƒxƒ“ƒg‰ğœ
+        // ãƒœã‚¿ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆè§£é™¤
         if (BuyLengthsButton != null)
             BuyLengthsButton.onClick.RemoveListener(BuyLengthFunc);
         if (BuyStrengthButton != null)
@@ -102,13 +132,42 @@ public class IdleManager : MonoBehaviour
         if (BuyOfflineEarningsButton != null)
             BuyOfflineEarningsButton.onClick.RemoveListener(BuyOfflineEarningsFunc);
     }
-
+    private void SetButtonLabel(Button btn, string text)
+    {
+        if (btn == null) return;
+        var label = btn.GetComponentInChildren<TMP_Text>(true);
+        if (label != null) label.text = text;
+    }
 
     private void RecalcCosts()
     {
         lengthCost = CostAtLevel(lengthLevel);
         strengthCost = CostAtLevel(strengthLevel);
         offlineEarningsCost = CostAtLevel(offlineLevel);
+
+        // Length
+        if (BuyLengthsButton != null)
+        {
+            bool canLevelUp = lengthLevel < MaxLevel;
+            BuyLengthsButton.interactable = canLevelUp;
+            SetButtonLabel(BuyLengthsButton, canLevelUp ? $"è³¼å…¥ ({lengthCost})" : "MAX");
+        }
+
+        // Strength
+        if (BuyStrengthButton != null)
+        {
+            bool canLevelUp = strengthLevel < MaxLevel;
+            BuyStrengthButton.interactable = canLevelUp;
+            SetButtonLabel(BuyStrengthButton, canLevelUp ? $"è³¼å…¥ ({strengthCost})" : "MAX");
+        }
+
+        // Offline
+        if (BuyOfflineEarningsButton != null)
+        {
+            bool canLevelUp = offlineLevel < MaxLevel;
+            BuyOfflineEarningsButton.interactable = canLevelUp;
+            SetButtonLabel(BuyOfflineEarningsButton, canLevelUp ? $"è³¼å…¥ ({offlineEarningsCost})" : "MAX");
+        }
     }
 
     private void OnApplicationFocus(bool hasFocus)
@@ -122,7 +181,7 @@ public class IdleManager : MonoBehaviour
     }
     
    
-    // š ‹¤’Ê‚Ì•Û‘¶ŠÖ”‚É•ª—£
+    // â˜… å…±é€šã®ä¿å­˜é–¢æ•°ã«åˆ†é›¢
     private void SaveNowUtc()
     {
         string nowIso = DateTime.UtcNow.ToString("O");
@@ -140,7 +199,7 @@ public class IdleManager : MonoBehaviour
         }
         else
         {
-            // ‹N“®’¼Œãi~2•bj‚Í•œ‹AƒCƒxƒ“ƒg‚ğ–³‹‚µ‚Ä“ñdÀs‚ğ–h‚®
+            // èµ·å‹•ç›´å¾Œï¼ˆ~2ç§’ï¼‰ã¯å¾©å¸°ã‚¤ãƒ™ãƒ³ãƒˆã‚’ç„¡è¦–ã—ã¦äºŒé‡å®Ÿè¡Œã‚’é˜²ã
             if (!_didInitialCompute && (Time.realtimeSinceStartup - _appStartRealtime) < 2f)
             {
                 _didInitialCompute = true;
@@ -151,7 +210,7 @@ public class IdleManager : MonoBehaviour
         }
     
     }
-    // Šù‘¶‚Ì ComputeOfflineAndShow ‚ğˆê•”•ÏX
+    // æ—¢å­˜ã® ComputeOfflineAndShow ã‚’ä¸€éƒ¨å¤‰æ›´
     private void ComputeOfflineAndShow()
     {
         string iso = PlayerPrefs.GetString(KEY_LAST_UTC, string.Empty);
@@ -163,7 +222,7 @@ public class IdleManager : MonoBehaviour
         {
             double elapsedSec = (DateTime.UtcNow - lastUtc).TotalSeconds;
 
-            // š 60•b–¢–‚Íg’™‚ß‚éhB•Û‘¶‚à‰æ–Ê‘JˆÚ‚à‚µ‚È‚¢iŸ‰ñ‚ÉŒJ‚è‰z‚·j
+            // â˜… 60ç§’æœªæº€ã¯â€œè²¯ã‚ã‚‹â€ã€‚ä¿å­˜ã‚‚ç”»é¢é·ç§»ã‚‚ã—ãªã„ï¼ˆæ¬¡å›ã«ç¹°ã‚Šè¶Šã™ï¼‰
             if (elapsedSec < 60.0)
             {
                 Debug.Log($"[Idle] <60s so skip. elapsed={elapsedSec:F1}s, keep lastUtc={lastUtc:o}");
@@ -172,13 +231,14 @@ public class IdleManager : MonoBehaviour
 
             int minutes = Mathf.Clamp(Mathf.FloorToInt((float)(elapsedSec / 60.0)), 0, maxOfflineMinutes);
             totalGain = minutes * OfflinePerMinute;
+            totalGain = Mathf.Min(totalGain, maxOfflineTotal);  // ä¿é™º
 
             Debug.Log($"[Idle] Offline minutes={minutes}, perMin={OfflinePerMinute}, totalGain={totalGain}");
 
-            // š •t—^‚Å‚«‚½g‚Æ‚«‚¾‚¯hŠî€‚ğ¡‚ÉXV
+            // â˜… ä»˜ä¸ã§ããŸâ€œã¨ãã ã‘â€åŸºæº–ã‚’ä»Šã«æ›´æ–°
             SaveNowUtc();
 
-            // š •ª>=1 ‚Ì‚Æ‚«‚¾‚¯•ñV‰æ–Ê‚ğo‚·
+            // â˜… åˆ†>=1 ã®ã¨ãã ã‘å ±é…¬ç”»é¢ã‚’å‡ºã™
             if (minutes >= 1 && totalGain > 0)
             {
                 _needShowReturn = true;
@@ -187,13 +247,13 @@ public class IdleManager : MonoBehaviour
         }
     }
 
-    // š ScreenManager ‚Ì‰Šú‰»Š®—¹E‘¼ƒXƒNƒŠƒvƒg‚Ì Start ‚ª‘–‚èØ‚Á‚½g‚ ‚Æh‚É1‰ñ‚¾‚¯ RETURN ‚Ö
+    // â˜… ScreenManager ã®åˆæœŸåŒ–å®Œäº†ãƒ»ä»–ã‚¹ã‚¯ãƒªãƒ—ãƒˆã® Start ãŒèµ°ã‚Šåˆ‡ã£ãŸâ€œã‚ã¨â€ã«1å›ã ã‘ RETURN ã¸
     private IEnumerator ShowReturnWhenReady()
     {
-        // ‹N“®’¼Œã‚Ì•œ‹AƒCƒxƒ“ƒg‚â‘¼ Start() ‚ğ‚â‚è‰ß‚²‚·
-        yield return null; // 1ƒtƒŒ[ƒ€
-        yield return new WaitForEndOfFrame(); // ƒŒƒCƒAƒEƒgŠ®—¹Œã
-        // ‚³‚ç‚É•ÛŒ¯‚Å­‚µ‘Ò‚Âi•K—v‚È‚çj
+        // èµ·å‹•ç›´å¾Œã®å¾©å¸°ã‚¤ãƒ™ãƒ³ãƒˆã‚„ä»– Start() ã‚’ã‚„ã‚Šéã”ã™
+        yield return null; // 1ãƒ•ãƒ¬ãƒ¼ãƒ 
+        yield return new WaitForEndOfFrame(); // ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆå®Œäº†å¾Œ
+        // ã•ã‚‰ã«ä¿é™ºã§å°‘ã—å¾…ã¤ï¼ˆå¿…è¦ãªã‚‰ï¼‰
         yield return new WaitForSecondsRealtime(0.05f);
 
         if (_needShowReturn && !_hasShownReturn && ScreenManager.Instance != null)
@@ -205,7 +265,7 @@ public class IdleManager : MonoBehaviour
     }
 
 
-    // š MAIN ‚Ö‚Ì‘JˆÚ‚ÍARETURN ‚ğ‚Ü‚¾o‚µ‚Ä‚¢‚È‚¢ŠÔ‚Í–³‹‚µ‚Ä‹£‡‚ğ‰ñ”ğ
+    // â˜… MAIN ã¸ã®é·ç§»ã¯ã€RETURN ã‚’ã¾ã å‡ºã—ã¦ã„ãªã„é–“ã¯ç„¡è¦–ã—ã¦ç«¶åˆã‚’å›é¿
     private void SafeGo(Screens s)
     {
         if (ScreenManager.Instance == null) return;
@@ -221,10 +281,13 @@ public class IdleManager : MonoBehaviour
     // ---- Purchases ----
 
 
-    // Button ‚Ì onClick ‚É“o˜^‚·‚é‚½‚ß‚É•Ê–¼ŠÖ”‚É‚µ‚Ä‚Ü‚·
+    // Button ã® onClick ã«ç™»éŒ²ã™ã‚‹ãŸã‚ã«åˆ¥åé–¢æ•°ã«ã—ã¦ã¾ã™
     private void BuyLengthFunc() => BuyLength();
     public bool BuyLength()
     {
+
+        if (lengthLevel >= MaxLevel)  // â˜… ä¸Šé™ãƒã‚§ãƒƒã‚¯
+            return false;
         if (!TrySpend(lengthCost)) return false;
         lengthLevel++;
         SaveProgress();
@@ -232,12 +295,15 @@ public class IdleManager : MonoBehaviour
         SafeGo(Screens.MAIN);
         return true;
     }
-    // Button ‚Ì onClick ‚É“o˜^‚·‚é‚½‚ß‚É•Ê–¼ŠÖ”‚É‚µ‚Ä‚Ü‚·
+    // Button ã® onClick ã«ç™»éŒ²ã™ã‚‹ãŸã‚ã«åˆ¥åé–¢æ•°ã«ã—ã¦ã¾ã™
     private void BuyStrengthFunc() => BuyStrength();
 
 
     public bool BuyStrength()
     {
+        if (strengthLevel >= MaxLevel)  // â˜… ä¸Šé™ãƒã‚§ãƒƒã‚¯
+            return false;
+
         if (!TrySpend(strengthCost)) return false;
         strengthLevel++;
         SaveProgress();
@@ -248,6 +314,9 @@ public class IdleManager : MonoBehaviour
     private void BuyOfflineEarningsFunc() => BuyOfflineEarnings();
     public bool BuyOfflineEarnings()
     {
+        if (offlineLevel >= MaxLevel)  // â˜… ä¸Šé™ãƒã‚§ãƒƒã‚¯
+            return false;
+
         if (!TrySpend(offlineEarningsCost)) return false;
         offlineLevel++;
         SaveProgress();
